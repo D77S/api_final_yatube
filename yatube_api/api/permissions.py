@@ -7,7 +7,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         '''Перегружаем метод разрешений уровня запроса.
         Возвращает True (запрос разрешён), только если
-        метод в запросе безопасный или юзер дал валидный токен.
+        метод в запросе безопасный или юзер идентифицирован.
         '''
         return (
             request.method in permissions.SAFE_METHODS
@@ -15,8 +15,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         '''Перегружаем метод разрешений уровня объекта запроса.
-        Возвращает True (доступ к объекту запроса разрешен), если
-        автор объекта запроса равен юзеру из запроса.
+        Возвращает True (доступ к объекту запроса разрешен), только если
+        метод в запросе безопасный или юзер - автор объекта запроса.
         '''
         return (
             request.method in permissions.SAFE_METHODS
