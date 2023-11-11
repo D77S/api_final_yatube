@@ -21,5 +21,5 @@ urlpatterns = [
     # "access": ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlI" +
     # "joiYWNjZXNzIiwiZXhwIjoxNzA4Mjc2MjM0LCJqdGkiOiJkOTU3NTU5ZDhiNDY0NW" +
     # "FkYmVhMzhjMTMxYTU0NDE0MyIsInVzZXJfaWQiOjF9.fasM8ylNDVU8-uTt53c2z1ghNnjwAuu-p0wXt-7LO2Q")
-    #    path('v1/', include(router_v1.urls)),
+    path('v1/', include(router_v1.urls)),
 ]
