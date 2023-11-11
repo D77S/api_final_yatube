@@ -2,7 +2,7 @@ from rest_framework import permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
 
-from posts.models import Group, Post, Comment
+from posts.models import Group, Follow, Post, Comment
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (GroupSerializer,
                           FollowSerializer,
@@ -57,4 +57,5 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     '''Вьюсет для фолловеров.'''
+    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
