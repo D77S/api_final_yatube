@@ -1,10 +1,9 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
 
-
-from posts.models import Comment, Follow, Group, Post
+from posts.models import Post, Group, Follow, Comment
 
 User = get_user_model()
 
@@ -41,7 +40,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
-    '''Класс сериализатора для фолловеров.'''
+    '''Класс сериализатора фолловеров.'''
     user = serializers.SlugRelatedField(
         slug_field='username',
         read_only=True,
@@ -50,8 +49,14 @@ class FollowSerializer(serializers.ModelSerializer):
                                              queryset=User.objects.all())
 
     def validate_following(self, value):
+        '''Валидирует поле "following".
+        Сравнивает его с текущим залогиненным юзером
+        и если совпадает - вызывает исключение
+        и затем далее код ответа 400.
+        '''
         if value == self.context['request'].user:
-            raise serializers.ValidationError('Сам на себя нельзя подписываться.')
+            raise serializers.ValidationError
+        ('Сам на себя нельзя подписываться.')
         return value
 
     class Meta:

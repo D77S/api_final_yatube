@@ -1,13 +1,11 @@
-from rest_framework import filters, permissions, viewsets
+from rest_framework import filters, viewsets, permissions
+from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
-from django.shortcuts import get_object_or_404
 
-from posts.models import Group, Follow, Post, Comment
+from posts.models import Post, Group, Follow, Comment
 from .permissions import IsOwnerOrReadOnly
-from .serializers import (GroupSerializer,
-                          FollowSerializer,
-                          PostSerializer,
+from .serializers import (PostSerializer, GroupSerializer, FollowSerializer,
                           CommentSerializer)
 
 
@@ -67,6 +65,9 @@ class FollowViewSet(viewsets.ModelViewSet):
         fields = '__all__'
 
     def get_queryset(self):
+        '''Задает кверисет сериалайзера так, чтобы
+        входили только объекты только текущего юзера.
+        '''
         return Follow.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):

@@ -1,10 +1,13 @@
-from django.contrib.auth import get_user_model
 from django.db import models
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
 class Group(models.Model):
+    '''Модель групп постов.
+    (Писали не мы, нам её дали в таком виде в т.з.)
+    '''
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -14,6 +17,9 @@ class Group(models.Model):
 
 
 class Post(models.Model):
+    '''Модель самх постов.
+    (Писали не мы, нам её дали в таком виде в т.з.)
+    '''
     text = models.TextField()
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
@@ -29,6 +35,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    '''Модель каментов к постам.
+    (Писали не мы, нам её дали в таком виде в т.з.)
+    '''
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(
@@ -39,6 +48,9 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
+    '''Модель фолловеров. Они же подписанты, подписки.
+    (А вот её писали мы сами уже.)
+    '''
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='subscriber')
     following = models.ForeignKey(
