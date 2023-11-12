@@ -70,7 +70,7 @@ class FollowViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         '''Задает кверисет сериалайзера так, чтобы
-        входили только объекты только текущего юзера.
+        входили объекты только текущего юзера.
         '''
         return Follow.objects.filter(user=self.request.user)
 
