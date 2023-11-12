@@ -1,4 +1,7 @@
-from rest_framework import filters, viewsets, permissions
+from rest_framework import (filters,
+                            mixins,
+                            permissions,
+                            viewsets)
 from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -55,7 +58,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=post)
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowViewSet(mixins.CreateModelMixin,
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet):
     '''Вьюсет для фолловеров.'''
     serializer_class = FollowSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
