@@ -1,5 +1,6 @@
-from rest_framework import permissions, viewsets
+from rest_framework import filters, permissions, viewsets
 from rest_framework.pagination import LimitOffsetPagination
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 
 from posts.models import Group, Follow, Post, Comment
@@ -57,5 +58,20 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     '''Вьюсет для фолловеров.'''
-    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    search_fields = ('following__username',)
+
+    class Meta:
+        model = Follow
+        fields = '__all__'
+
+    def get_queryset(self):
+        return Follow.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        '''Перегружает метод вьюсета по созданию объекта.
+        При создании подписки нам надо, чтобы
+        id кто подписывается брался из реквеста.
+        '''
+        serializer.save(user=self.request.user)

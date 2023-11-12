@@ -38,6 +38,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class FollowSerializer(serializers.ModelSerializer):
     '''Класс сериализатора для фолловеров.'''
+    user = serializers.StringRelatedField(read_only=True)
+    following = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         fields = '__all__'
         model = Follow
