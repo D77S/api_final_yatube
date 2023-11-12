@@ -15,11 +15,12 @@ urlpatterns = [
     path('v1/', include('djoser.urls')),
     path('v1/', include('djoser.urls.jwt')),
     # superuser: login/pass admin1/admin1
-    # "refresh": ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBl" +
-    # "IjoicmVmcmVzaCIsImV4cCI6MTY5OTgwOTAzNCwianRpIjoiNDI4ZDlkNmRkYjQyNDI" +
-    # "zNmEwYzA3ZTU0NWZlYjQ2MTIiLCJ1c2VyX2lkIjoxfQ.hcrZ4Da5MGjQsHHocjfGwz89x4ShJjYTUrTol3GxVmc"),
-    # "access": ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlI" +
-    # "joiYWNjZXNzIiwiZXhwIjoxNzA4Mjc2MjM0LCJqdGkiOiJkOTU3NTU5ZDhiNDY0NW" +
-    # "FkYmVhMzhjMTMxYTU0NDE0MyIsInVzZXJfaWQiOjF9.fasM8ylNDVU8-uTt53c2z1ghNnjwAuu-p0wXt-7LO2Q")
+    # "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5OTkwMTEwMiwianRpIjoiMzE3ODZmNmIyOGY4NDkyYTgwYTMwZjI4NWFiMGQyMWIiLCJ1c2VyX2lkIjoxfQ.dk_UB3matd0Uk3AE_4J_Y4fFvNQlqbmQcJDd8HN3iUU"
+    # "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzY4MzAyLCJqdGkiOiI1MjY0MWEwMWY1ZmI0MWRkODJjZjBkMzA5NjhmMGYzNiIsInVzZXJfaWQiOjF9.IPD8zFRGS9tMEZ4quYp6ziTmacpaxzoYUF9ZEcZeG-E"
+    # admin2/admin2admin2
+    # admin3/admin3admin3
+    # admin4/admin4admin4
+    # admin5/admin5admin5
+
     path('v1/', include(router_v1.urls)),
 ]
