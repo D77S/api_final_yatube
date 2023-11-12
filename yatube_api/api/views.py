@@ -59,6 +59,9 @@ class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ('following__username',)
+    # Единственный из вьюсетов, в котором
+    # не переопределяем свой permission в сторону послабления,
+    # а используем permission уровня проекта.
 
     class Meta:
         model = Follow
