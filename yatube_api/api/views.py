@@ -17,6 +17,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    '''Вьюсет для самих постов.'''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsOwnerOrReadOnly,)
