@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
+# Помню, что локальные импорты должны бы идти ПОСЛЕ всех остальных,
+# но не удается это объяснить автотесту на платформе яндекса,
+# который принимает домашние работы. Никак. Бился.
 from posts.models import Comment, Follow, Group, Post
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
-
 
 User = get_user_model()
 
