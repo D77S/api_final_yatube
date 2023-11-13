@@ -1,17 +1,18 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from posts.models import Comment, Follow, Group, Post
-from rest_framework import filters, mixins, permissions, viewsets
+from rest_framework import filters, viewsets, mixins
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from posts.models import Comment, Follow, Group, Post
 from .permissions import IsOwnerOrReadOnly
-from .serializers import CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer
+from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer)
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     '''Вьюсет для групп постов.'''
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class PostViewSet(viewsets.ModelViewSet):
