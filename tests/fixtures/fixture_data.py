@@ -1,5 +1,5 @@
 import pytest
-from posts.models import Post, Group, Follow, Comment
+from posts.models import Comment, Follow, Group, Post
 
 
 @pytest.fixture
