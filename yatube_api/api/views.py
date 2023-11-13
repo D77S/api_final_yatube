@@ -5,8 +5,10 @@ from rest_framework import mixins, filters, viewsets, permissions
 from rest_framework.pagination import LimitOffsetPagination
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import (PostSerializer, GroupSerializer, FollowSerializer,
-                          CommentSerializer)
+from .serializers import (CommentSerializer,
+                          FollowSerializer,
+                          GroupSerializer,
+                          PostSerializer)
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     '''Вьюсет для групп постов.'''
