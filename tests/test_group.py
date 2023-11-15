@@ -1,9 +1,7 @@
 from http import HTTPStatus
-
 import pytest
 
 from posts.models import Group
-
 
 @pytest.mark.django_db(transaction=True)
 class TestGroupAPI:

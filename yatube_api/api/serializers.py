@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
-from posts.models import Comment, Follow, Group, Post
+
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
-# Замечание Для консистентности User тоже лучше брать из моделей,
-# а не через get_user_model.
-# Устранено.
+
+from posts.models import Comment, Follow, Group, Post
 
 class PostSerializer(serializers.ModelSerializer):
     '''Класс сериализатора постов.'''
@@ -29,7 +28,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     '''Класс сериализатора каментов к постам.'''
     author = serializers.SlugRelatedField(
-        #  Пайтест хочет видеть read_only именно здесь, а не в Meta.
+        #  Pytest хочет видеть read_only именно здесь, а не в Meta.
         read_only=True,
         slug_field='username'
     )

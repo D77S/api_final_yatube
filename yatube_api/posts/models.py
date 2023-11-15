@@ -1,16 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-User = get_user_model()
+MAX_NAME_LENGTH = 200
 
-# Замечание: все модели добавить в админку.
-# (А я, конечно, ни одной не добавил, лень.)
+User = get_user_model()
 
 class Group(models.Model):
     '''Модель групп постов.
     (Писали не мы, нам её дали в таком виде в т.з.)
     '''
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=MAX_NAME_LENGTH)
     slug = models.SlugField(unique=True)
     description = models.TextField()
 
@@ -19,9 +18,7 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    # Замечание: В модели Post обязательно нужна сортировка
-    # по умолчанию (чтобы работала пагинация). Но не по id.
-    '''Модель самх постов.
+    '''Модель самих постов.
     (Писали не мы, нам её дали в таком виде в т.з.)
     '''
     text = models.TextField()
@@ -50,6 +47,9 @@ class Comment(models.Model):
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True, db_index=True)
 
+    def __str__(self):
+        return self.text
+
 
 class Follow(models.Model):
     '''Модель фолловеров. Они же подписанты, подписки.
@@ -60,6 +60,9 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='subscribed')
 
+    def __str__(self):
+        return f'{self.user} подписан на {self.following}'
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -67,4 +70,3 @@ class Follow(models.Model):
                 name='unique_user_following'
             )
         ]
-        # Замечание: Можно добавить констрейт на случай подписки на самого себя

@@ -1,14 +1,19 @@
 from django.shortcuts import get_object_or_404
+
 from django_filters.rest_framework import DjangoFilterBackend
-from posts.models import Comment, Follow, Group, Post
 from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .permissions import MethodIsSafeOrUserIsAuthor
-from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
-                          PostSerializer)
+from posts.models import Follow, Group, Post
 
+from .permissions import MethodIsSafeOrUserIsAuthor
+from .serializers import (
+    CommentSerializer,
+    FollowSerializer,
+    GroupSerializer,
+    PostSerializer,
+)
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     '''Вьюсет для групп постов.'''
@@ -42,8 +47,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         '''
         post_id = self.kwargs.get("post_id")
         post = get_object_or_404(Post, id=post_id)
-        # return Comment.objects.filter(post=post)
-        # Замечание: Лучше использовать related_name.
         return post.comments.all()  # type: ignore
 
     def perform_create(self, serializer):
@@ -61,7 +64,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 class FollowViewSet(mixins.CreateModelMixin,
                     mixins.ListModelMixin,
                     viewsets.GenericViewSet):
-    # Замечание: Отличное решение! Миксины.
     '''Вьюсет для фолловеров.'''
     serializer_class = FollowSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
@@ -78,7 +80,8 @@ class FollowViewSet(mixins.CreateModelMixin,
         '''Задает кверисет сериалайзера так, чтобы
         входили объекты только текущего юзера.
         '''
-        return Follow.objects.filter(user=self.request.user)
+        current_user = self.request.user
+        return current_user.subscriber.all()  # type: ignore
 
     def perform_create(self, serializer):
         '''Перегружает метод вьюсета по созданию объекта.

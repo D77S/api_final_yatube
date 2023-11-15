@@ -2,7 +2,6 @@ import pytest
 
 from posts.models import Comment, Follow, Group, Post
 
-
 @pytest.fixture
 def group_1():
     return Group.objects.create(title='Группа 1', slug='group_1')

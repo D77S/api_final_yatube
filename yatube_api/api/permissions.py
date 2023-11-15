@@ -1,6 +1,5 @@
 from rest_framework import permissions
 
-
 class MethodIsSafeOrUserIsAuthor(permissions.BasePermission):
     '''Кастомный класс разрешений.'''
 
@@ -9,12 +8,6 @@ class MethodIsSafeOrUserIsAuthor(permissions.BasePermission):
         Возвращает True (запрос разрешён), только если
         метод в запросе безопасный или юзер идентифицирован.
         '''
-        # Замечание ревьюера:
-        # Если класс назвали IsOwnerOrReadOnly, то он не должен
-        # проверять is_authenticated, это противоречит его названию. 
-        # Надо либо менять название, либо дополнительно использовать
-        # стандартный IsAuthenticated в контроллере.
-        # Устранено: переназвал мой пермишен.
         return (
             request.method in permissions.SAFE_METHODS
             or request.user.is_authenticated)
