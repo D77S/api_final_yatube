@@ -5,7 +5,7 @@ from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .permissions import IsOwnerOrReadOnly
+from .permissions import MethodIsSafeOrUserIsAuthor
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer)
 
@@ -21,7 +21,7 @@ class PostViewSet(viewsets.ModelViewSet):
     '''Вьюсет для самих постов.'''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (MethodIsSafeOrUserIsAuthor,)
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
@@ -32,7 +32,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     '''Вьюсет для каментов.'''
     serializer_class = CommentSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (MethodIsSafeOrUserIsAuthor,)
 
     def get_queryset(self):
         '''Перегружает кверисет таким образом,
@@ -42,7 +42,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         '''
         post_id = self.kwargs.get("post_id")
         post = get_object_or_404(Post, id=post_id)
-        return Comment.objects.filter(post=post)
+        # return Comment.objects.filter(post=post)
+        # Замечание: Лучше использовать related_name.
+        return post.comments.all()  # type: ignore
 
     def perform_create(self, serializer):
         '''Перегружает метод вьюсета по созданию объекта.
@@ -59,6 +61,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 class FollowViewSet(mixins.CreateModelMixin,
                     mixins.ListModelMixin,
                     viewsets.GenericViewSet):
+    # Замечание: Отличное решение! Миксины.
     '''Вьюсет для фолловеров.'''
     serializer_class = FollowSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)

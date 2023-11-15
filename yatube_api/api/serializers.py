@@ -1,11 +1,11 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from posts.models import Comment, Follow, Group, Post
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
-
-User = get_user_model()
-
+# Замечание Для консистентности User тоже лучше брать из моделей,
+# а не через get_user_model.
+# Устранено.
 
 class PostSerializer(serializers.ModelSerializer):
     '''Класс сериализатора постов.'''
@@ -29,13 +29,15 @@ class GroupSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     '''Класс сериализатора каментов к постам.'''
     author = serializers.SlugRelatedField(
-        read_only=True, slug_field='username'
+        #  Пайтест хочет видеть read_only именно здесь, а не в Meta.
+        read_only=True,
+        slug_field='username'
     )
 
     class Meta:
         fields = '__all__'
         model = Comment
-        read_only_fields = ('author', 'post')
+        read_only_fields = ('post',)
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -55,7 +57,7 @@ class FollowSerializer(serializers.ModelSerializer):
         '''
         if value == self.context['request'].user:
             raise serializers.ValidationError
-        ('Сам на себя нельзя подписываться.')
+        ('Самому на себя нельзя подписываться.')
         return value
 
     class Meta:

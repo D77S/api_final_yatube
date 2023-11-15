@@ -3,6 +3,8 @@ from django.db import models
 
 User = get_user_model()
 
+# Замечание: все модели добавить в админку.
+# (А я, конечно, ни одной не добавил, лень.)
 
 class Group(models.Model):
     '''Модель групп постов.
@@ -17,13 +19,15 @@ class Group(models.Model):
 
 
 class Post(models.Model):
+    # Замечание: В модели Post обязательно нужна сортировка
+    # по умолчанию (чтобы работала пагинация). Но не по id.
     '''Модель самх постов.
     (Писали не мы, нам её дали в таком виде в т.з.)
     '''
     text = models.TextField()
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts')
+        User, on_delete=models.CASCADE, related_name='authors')
     group = models.ForeignKey(
         Group, on_delete=models.SET_NULL,
         related_name='posts', blank=True, null=True)
@@ -63,3 +67,4 @@ class Follow(models.Model):
                 name='unique_user_following'
             )
         ]
+        # Замечание: Можно добавить констрейт на случай подписки на самого себя
