@@ -34,6 +34,9 @@ class Post(models.Model):
     def __str__(self):
         return self.text
 
+    class Meta:
+        ordering = ['pub_date', 'text']
+
 
 class Comment(models.Model):
     '''Модель каментов к постам.
@@ -61,12 +64,16 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name='subscribed')
 
     def __str__(self):
-        return f'{self.user} подписан на {self.following}'
+        return f'{str(self.user).capitalize()} подписан на {self.following}'
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'following'],
                 name='unique_user_following'
+            ),
+            models.CheckConstraint(
+                check=models.Q(user__exact=f'admin1'),
+                name='user_not_followed_himself'
             )
         ]
