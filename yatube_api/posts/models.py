@@ -73,7 +73,7 @@ class Follow(models.Model):
                 name='unique_user_following'
             ),
             models.CheckConstraint(
-                check=models.Q(user__exact=f'{self.following}'),
+                check=models.Q(user__exact=models.F('{following}')),
                 name='user_not_followed_himself'
             )
         ]
