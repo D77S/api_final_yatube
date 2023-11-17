@@ -7,9 +7,7 @@ MAX_NAME_LENGTH = 200
 User = get_user_model()
 
 class Group(models.Model):
-    '''Модель групп постов.
-    (Писали не мы, нам её дали в таком виде в т.з.)
-    '''
+    '''Модель групп постов.'''
     title = models.CharField(
         max_length=MAX_NAME_LENGTH,
         verbose_name='Заголовок')
@@ -28,9 +26,7 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    '''Модель самих постов.
-    (Писали не мы, нам её дали в таком виде в т.з.)
-    '''
+    '''Модель самих постов.'''
     text = models.TextField(
         verbose_name='Текст поста'
     )
@@ -64,9 +60,7 @@ class Post(models.Model):
         return self.text
 
 class Comment(models.Model):
-    '''Модель каментов к постам.
-    (Писали не мы, нам её дали в таком виде в т.з.)
-    '''
+    '''Модель каментов к постам.'''
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -92,9 +86,7 @@ class Comment(models.Model):
         return self.text
 
 class Follow(models.Model):
-    '''Модель фолловеров. Они же подписанты, подписки.
-    (А вот её писали мы сами уже.)
-    '''
+    '''Модель фолловеров. Они же подписанты, подписки.'''
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
