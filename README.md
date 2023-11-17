@@ -15,7 +15,7 @@ git clone https://github.com/D77S/api_final_yatube
 ```
 cd api_final_yatube
 ```
-- создать окружение (Данная команда - только для windows, у кого не он - те пусть сами найдут свои варианты команд.)
+- создать окружение (Данная команда - только для windows, у кого не он - там через python3.)
 ```
 python -m venv venv
 ```
