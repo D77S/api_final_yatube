@@ -7,6 +7,7 @@ MAX_NAME_LENGTH = 200
 
 User = get_user_model()
 
+
 class Group(models.Model):
     '''Модель групп постов.'''
     title = models.CharField(
@@ -60,6 +61,7 @@ class Post(models.Model):
     def __str__(self):
         return self.text
 
+
 class Comment(models.Model):
     '''Модель каментов к постам.'''
     author = models.ForeignKey(
@@ -85,6 +87,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
 
 class Follow(models.Model):
     '''Модель фолловеров. Они же подписанты, подписки.'''
