@@ -1,5 +1,6 @@
 from rest_framework import permissions
 
+
 class MethodIsSafeOrUserIsAuthor(permissions.BasePermission):
     '''Кастомный класс разрешений.'''
 

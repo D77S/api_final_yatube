@@ -9,6 +9,7 @@ from .permissions import MethodIsSafeOrUserIsAuthor
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer,)
 
+
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     '''Вьюсет для групп постов.'''
     queryset = Group.objects.all()
