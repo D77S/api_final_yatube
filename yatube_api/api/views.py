@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .permissions import MethodIsSafeOrUserIsAuthor
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
-                          PostSerializer,)
+                          PostSerializer)
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
