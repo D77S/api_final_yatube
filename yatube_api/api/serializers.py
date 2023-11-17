@@ -28,7 +28,8 @@ class GroupSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     '''Класс сериализатора каментов к постам.'''
     author = serializers.SlugRelatedField(
-        #  Pytest хочет видеть read_only именно здесь, а не в Meta.
+        #  Pytest почему-то хочет видеть read_only
+        #  именно здесь, а не в Meta.
         read_only=True,
         slug_field='username'
     )

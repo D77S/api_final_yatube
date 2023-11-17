@@ -3,8 +3,6 @@ from django.contrib import admin
 
 from posts.models import Comment, Follow, Group, Post
 
-#  admin.site.register(Group)
-
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     search_fields = ('text', 'pub_date', 'author__username',
