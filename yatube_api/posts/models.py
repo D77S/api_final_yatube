@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.forms import ValidationError
+# from django.forms import ValidationError
 
 MAX_NAME_LENGTH = 200
 
@@ -115,7 +115,7 @@ class Follow(models.Model):
                 name='unique_user_following'
             ),
             models.CheckConstraint(
-                check=models.Q(user__exact=models.F('{following}')),
+                check=~models.Q(user=models.F('following')),
                 name='user_not_followed_himself'
             )
         ]
@@ -123,6 +123,5 @@ class Follow(models.Model):
     #  def clean(self):
     #      if self.user == self.following:
     #          raise ValidationError('Самому на себя нельзя подписываться')
-
     def __str__(self):
         return f'{str(self.user).capitalize()} подписан на {self.following}'
