@@ -13,10 +13,7 @@ router_v1.register(r'posts/(?P<post_id>\d+)/comments',
 router_v1.register(r'follow', FollowViewSet, basename='follows')
 
 urlpatterns = [
-    #  Урлов djozer'а базовых, на регистрацию нового юзера,
-    #  в спецификации нет - придется убрать их из паттернов.
-    #  Хотя с ними было очень удобно регать юзеров через поцман.
-    #  Теперь придется это делать через createsuperuser или админку.
+    #  Новых юзеров придется регать через createsuperuser или админку.
     #  path('v1/', include('djoser.urls')),
     path('v1/', include('djoser.urls.jwt')),
     path('v1/', include(router_v1.urls)),

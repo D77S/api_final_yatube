@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+
 # from django.forms import ValidationError
 
 MAX_NAME_LENGTH = 200
@@ -112,8 +113,12 @@ class Follow(models.Model):
             )
         ]
 
+    # Один из вариантов валидатора само-подписки, уровня модели.
+    # Был запасным вариантом на случай если бы не удалось
+    # допилить констрейт.
     #  def clean(self):
     #      if self.user == self.following:
     #          raise ValidationError('Самому на себя нельзя подписываться')
+
     def __str__(self):
         return f'{str(self.user).capitalize()} подписан на {self.following}'
